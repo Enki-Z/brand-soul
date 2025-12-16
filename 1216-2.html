@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yiting | Brand Soul Architect</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-sub: rgba(255, 255, 255, 0.7);
+            --accent: #4ade80; /* 保持你喜欢的极光绿 */
+            --font-head: "Playfair Display", "Noto Serif SC", serif;
+            --font-body: "Inter", sans-serif;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --radius: 12px;
+            --glass-blur: 20px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .font-serif-main { font-family: var(--font-head); }
+        
+        .glass-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            backdrop-filter: blur(var(--glass-blur));
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            border-color: rgba(74, 222, 128, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        #aurora-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; filter: blur(80px); opacity: 0.7;
+        }
+
+        .media-container {
+            position: relative; 
+            width: 100%;
+            overflow: hidden;
+            border-radius: var(--radius); 
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: border-color 0.3s;
+        }
+        .media-container:hover { border-color: rgba(255,255,255,0.3); }
+
+        .aspect-video-fix { aspect-ratio: 16 / 9; }
+        .aspect-portrait-fixed { aspect-ratio: 9 / 16; }
+
+        .media-container img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.7s ease;
+        }
+        .media-container:hover img.hover-scale { transform: scale(1.03); }
+
+        .play-btn {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 56px; height: 56px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; z-index: 20;
+        }
+        .media-container:hover .play-btn {
+            background: rgba(74, 222, 128, 0.2); 
+            border-color: #4ade80;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
+        }
+        
+        .fade-in-up { animation: fadeInUp 1s ease-out forwards; opacity: 0; transform: translateY(30px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .gallery-dot {
+            width: 6px; height: 6px; border-radius: 50%; background: white; opacity: 0.3;
+            transition: all 0.3s; cursor: pointer;
+        }
+        .gallery-dot.active { opacity: 1; transform: scale(1.2); background: #4ade80; }
+        
+        .stat-number {
+            font-family: var(--font-head);
+            color: #4ade80;
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
+        }
+
+        .footer-link { text-transform: none; letter-spacing: 0.05em; }
+
+        .audio-control {
+            position: fixed; bottom: 30px; right: 30px; z-index: 100;
+            display: flex; align-items: center; gap: 10px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+            padding: 8px 16px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .audio-control:hover { background: rgba(255,255,255,0.1); border-color: #4ade80; }
+        .equalizer { display: flex; gap: 3px; align-items: center; height: 12px; }
+        .bar { width: 2px; background-color: #4ade80; height: 2px; transition: height 0.2s; }
+        .playing .bar { animation: equalize 1s infinite ease-in-out; }
+        
+        .portrait-frame {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            outline: 1px solid rgba(255, 255, 255, 0.05);
+            outline-offset: 8px;
+            transition: all 0.5s ease;
+        }
+        .group:hover .portrait-frame {
+            border-color: rgba(255, 255, 255, 0.3);
+            outline-color: rgba(74, 222, 128, 0.3);
+            outline-offset: 4px;
+        }
+        
+        .icon-box {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem; color: var(--accent);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .group:hover .icon-box {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: rgba(74, 222, 128, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* 强调下划线 */
+        .u-line {
+            background-image: linear-gradient(120deg, rgba(74, 222, 128, 0.3) 0%, rgba(74, 222, 128, 0.3) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.3em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+        }
+        .group:hover .u-line {
+            background-size: 100% 88%;
+        }
+
+        .arrow-left-anim { animation: pointLeft 1.5s infinite ease-in-out; }
+        .arrow-right-anim { animation: pointRight 1.5s infinite ease-in-out; }
+        @keyframes pointLeft { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
+        @keyframes pointRight { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+    </style>
+</head>
+<body>
+
+    <canvas id="aurora-canvas"></canvas>
+
+    <nav class="fixed top-0 w-full p-6 flex justify-between items-center z-50 mix-blend-difference text-white">
+        <div class="text-xs tracking-[0.2em] uppercase font-bold text-emerald-300">Yiting. Brand Soul</div>
+        
+        <!-- 修改：右上角直接显示微信号，更符合国内HR习惯 -->
+        <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('enki-zero'); alert('微信号已复制到剪贴板')" class="text-xs tracking-[0.1em] hover:text-emerald-300 transition-colors flex items-center gap-2 cursor-pointer group">
+            <span class="opacity-70 group-hover:opacity-100">WeChat:</span>
+            <span class="font-bold border-b border-white/20 group-hover:border-emerald-300 pb-0.5">enki-zero</span>
+        </a>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 pb-32">
+
+        <!-- 0 | 宣言页 -->
+        <header class="min-h-screen flex flex-col justify-center items-start pt-20 relative">
+            <div class="fade-in-up w-full">
+                <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-8 text-emerald-300">
+                    Manifesto
+                </p>
+                
+                <h1 class="font-serif-main text-5xl md:text-8xl leading-none mb-6 tracking-tight">
+                    万物皆有灵，<br>
+                    品牌亦有心。
+                </h1>
+
+                <!-- 修改：提亮英文副标题，去除 'text-lg' 的灰色感，使用 text-white/70 增加清晰度 -->
+                <h2 class="text-lg md:text-2xl font-light text-white/70 font-serif-main italic mb-12 tracking-wide">
+                    Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
+                </h2>
+                
+                <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                    一亭Enki｜品牌&内容营销总监
+                </p>
+            </div>
+            
+            <div class="absolute bottom-12 left-6 opacity-30 animate-bounce">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke-width="1"/></svg>
+            </div>
+        </header>
+
+        <!-- 1 | 我是谁 -->
+        <section class="py-24 border-t border-white/5">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-4 fade-in-up">
+                    <div class="aspect-[3/4] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
+                        <!-- 你的头像 -->
+                        <img src="./images/avatar.jpg" 
+                             alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
+                             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'">
+                    </div>
+                </div>
+                <div class="md:col-span-8 fade-in-up" style="animation-delay: 0.1s">
+                    <h2 class="font-serif-main text-3xl md:text-4xl mb-8">我是 一亭Enki。<br><span class="text-emerald-300/80 text-2xl italic">品牌灵魂构建师。</span></h2>
+                    
+                    <div class="space-y-6 text-lg font-light opacity-90 leading-relaxed">
+                        <p>
+                            8年以上品牌与内容操盘经验，擅长中高端餐饮、新消费与二次元文化。
+                            拥有老品牌重构和新品牌0到1经验，具备跨国团队管理经验与甲乙方双重视角。
+                        </p>
+                        <p>
+                            在这个“万物皆可卷”的时代，消费者买的不再是单纯的商品，而是“我向往的生活”和“懂我的瞬间”。
+                        </p>
+                        <p>
+                            我的专长，在于精准捕捉Z世代与中产用户的微妙情绪，搭建品牌系统，提炼独特定位。
+                            通过<span class="text-emerald-300 font-normal">品牌美学</span>与<span class="text-emerald-300 font-normal">内容叙事</span>，让品牌从“功能性的商品”进化为用户“精神的栖息地”。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2 | 品牌灵魂方法论 (The Soul Methodology) -->
+        <section class="py-24 border-t border-white/5">
+            <div class="mb-16 fade-in-up">
+                <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Methodology</span>
+                <h2 class="font-serif-main text-3xl md:text-4xl">
+                    构建品牌灵魂
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 1. 文化锚点 -->
+                <div class="glass-card p-8 fade-in-up group flex flex-col h-full" style="animation-delay: 0.1s">
+                    <div class="icon-box">
+                        <span class="font-serif-main text-xl italic">01</span>
+                    </div>
+                    <h3 class="font-serif-main text-xl text-emerald-300 mb-4">文化锚点</h3>
+                    <p class="text-sm opacity-70 leading-relaxed mb-6 flex-grow">
+                        品牌不仅是定位，更拥有“灵魂”。<br><br>
+                        从品牌基因中提炼出能够引发共鸣的<span class="text-white border-b border-white/20">文化内核</span>。无论是“松弛感”、“燃”还是“独处美学”，确立品牌在精神层面的不可替代性，让品牌拥有世界观。
+                    </p>
+                </div>
+
+                <!-- 2. 全域感官 -->
+                <div class="glass-card p-8 fade-in-up group flex flex-col h-full" style="animation-delay: 0.2s">
+                    <div class="icon-box">
+                        <span class="font-serif-main text-xl italic">02</span>
+                    </div>
+                    <h3 class="font-serif-main text-xl text-emerald-300 mb-4">全域感官</h3>
+                    <p class="text-sm opacity-70 leading-relaxed mb-6 flex-grow">
+                        将抽象的品牌理念，落地成可感知的“五感体验”。确保每一次点击与每一次触碰，都是对品牌灵魂的确认。<br><br>
+                        <span class="text-white border-b border-white/20">线下</span>：空间与细节视觉、音乐、香气与触感；<br>
+                        <span class="text-white border-b border-white/20">线上</span>：视觉语言、交互节奏与内容调性。<br>
+                        
+                    </p>
+                </div>
+
+                <!-- 3. 情绪共振 -->
+                <div class="glass-card p-8 fade-in-up group flex flex-col h-full" style="animation-delay: 0.3s">
+                    <div class="icon-box">
+                        <span class="font-serif-main text-xl italic">03</span>
+                    </div>
+                    <h3 class="font-serif-main text-xl text-emerald-300 mb-4">情绪共振</h3>
+                    <p class="text-sm opacity-70 leading-relaxed mb-6 flex-grow">
+                        从单向输出到双向奔赴。<br><br>
+                        通过内容叙事与品牌传播，制造品牌独有的<span class="text-white border-b border-white/20">"Vibe" (氛围感)</span>。让用户在品牌中感到共鸣，成为品牌的用户甚至布道者，形成拥有共同价值观的精神部落。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3 | 优势 -->
+        <section class="py-24 border-t border-white/5">
+            <div class="mb-12 fade-in-up">
+                <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Capabilities</span>
+                <h2 class="font-serif-main text-3xl md:text-4xl">我的核心能力</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- 1. 品牌系统构建 -->
+                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.1s">
+                    <div class="icon-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">品牌系统构建</h3>
+                    <p class="text-xs opacity-60 leading-relaxed flex-grow">
+                        擅长从人文洞察中提炼品牌灵魂，与用户共鸣，将抽象价值转化为可感知的体验，实现从战略到落地的闭环。
+                        <br><br>
+                        <span class="opacity-80 border-t border-white/10 pt-4 block mt-2">
+                            曾负责10年老品牌升级重构，以及新品牌从0到1搭建。 
+                        </span>
+                    </p>
+                </div>
+
+                <!-- 2. 叙事与表达 -->
+                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.2s">
+                    <div class="icon-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                    </div>
+                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">叙事与表达</h3>
+                    <p class="text-xs opacity-60 leading-relaxed flex-grow">
+                        担任头部游戏品牌海外MV项目负责人，策划、编导，统筹内容方向、分镜结构与跨国团队协作，多次实现百万级播放。
+                        <br><br>
+                        <span class="opacity-80 border-t border-white/10 pt-4 block mt-2">
+                            独立制作人文类AI短视频，获得各大官媒转载，总点赞近10万，播放数百万。
+                        </span>
+                    </p>
+                </div>
+
+                <!-- 3. 危机洞察 -->
+                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.3s">
+                    <div class="icon-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">危机洞察</h3>
+                    <p class="text-xs opacity-60 leading-relaxed flex-grow">
+                        提前识别并摁死某品牌潜在毁灭性舆情危机，避免品牌陷入不可逆的公关灾难。
+                        <br><br>
+                        <span class="opacity-80 border-t border-white/10 pt-4 block mt-2">
+                            也曾提前识别某跨国联名项目风险并及时止损，避免品牌形象受损。 
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+             <div class="flex flex-wrap gap-4 text-xs font-mono opacity-50 fade-in-up" style="animation-delay: 0.4s">
+                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default">
+                    <span class="text-emerald-500">#</span> 共建者精神
+                </span>
+                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default">
+                    <span class="text-emerald-500">#</span> 终生学习者 (心理学/系统思维/艺术/哲学/历史/AI)
+                </span>
+                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default">
+                    <span class="text-emerald-500">#</span> 高压推进与决策能力
+                </span>
+            </div>
+        </section>
+
+        <!-- 4 | 经历 -->
+        <section class="py-24 border-t border-white/5">
+            <div class="flex justify-between items-baseline mb-16 fade-in-up">
+                <h2 class="font-serif-main text-3xl md:text-4xl">Selected Works.</h2>
+                <span class="text-xs font-mono opacity-40 uppercase">Case Studies</span>
+            </div>
+            <div class="space-y-24" id="works-container">
+                <!-- JS 自动渲染 -->
+            </div>
+        </section>
+
+        <!-- 5 | 愿景 -->
+        <section class="min-h-[50vh] flex flex-col justify-center items-center text-center py-24 border-t border-white/5">
+            <h2 class="font-serif-main text-3xl md:text-5xl mb-8 fade-in-up leading-tight">
+                " 好的品牌，<br>是当代人的 <span class="italic text-emerald-300">精神栖息地</span>. "
+            </h2>
+            <p class="opacity-60 font-light max-w-xl fade-in-up delay-100">
+                我正在寻找注重品牌格调与文化内涵的团队，<br>期待与您共建让人们热爱的生活方式。
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs opacity-60 text-white">
+            <div class="uppercase tracking-widest">© 2025 Yiting</div>
+            <div class="flex flex-col md:flex-row gap-8 items-center text-center md:text-right">
+                <div class="flex items-center gap-4">
+                    <span class="footer-link hover:text-white transition-colors cursor-default">WeChat: enki-zero</span>
+                    <!-- 修改：恢复为大尺寸二维码，方便直接扫码 -->
+                    <div class="w-24 h-24 bg-white/10 rounded-lg overflow-hidden border border-white/20 p-1">
+                        <img src="./images/wechat_qr.jpg" alt="WeChat QR" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" onerror="this.src='https://via.placeholder.com/100/111/fff?text=QR'">
+                    </div>
+                </div>
+                <a href="mailto:xinran@example.com" class="footer-link hover:text-white transition-colors">Email: 2418491123@qq.com</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- 音频控件 -->
+    <div class="audio-control" id="audio-btn" onclick="toggleAudio()">
+        <div class="equalizer" id="equalizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-white/80" id="audio-text">Sound Off</span>
+    </div>
+
+    <!-- 音乐配置：添加 autoplay -->
+    <audio id="bg-music" loop autoplay>
+        <source src="./bgm.MP3" type="audio/mp3">
+    </audio>
+
+    <!-- 逻辑配置区 -->
+    <script>
+        let isPlaying = false;
+        const audio = document.getElementById('bg-music');
+        const equalizer = document.getElementById('equalizer');
+        const audioText = document.getElementById('audio-text');
+
+        // 修改：尝试自动播放
+        window.addEventListener('load', () => {
+             // 现代浏览器通常需要用户交互才能播放音频，但我们会尝试
+             const playPromise = audio.play();
+             if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay started!
+                    equalizer.classList.add('playing');
+                    audioText.innerText = "Sound On";
+                    isPlaying = true;
+                }).catch(error => {
+                    // Autoplay was prevented.
+                    console.log("Autoplay prevented by browser, waiting for interaction.");
+                    audioText.innerText = "Sound Off";
+                    isPlaying = false;
+                    // Fallback: 页面第一次点击时播放
+                    document.body.addEventListener('click', startAudioOnce);
+                });
+             }
+        });
+
+        function startAudioOnce() {
+            if (!isPlaying) {
+                toggleAudio();
+                document.body.removeEventListener('click', startAudioOnce);
+            }
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                equalizer.classList.remove('playing');
+                audioText.innerText = "Sound Off";
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    equalizer.classList.add('playing');
+                    audioText.innerText = "Sound On";
+                    isPlaying = true;
+                }).catch(e => console.error(e));
+            }
+        }
+
+        const experiences = [
+            // 1. 日本经历
+            {
+                id: "japan",
+                period: "2022.04 - 2025.05",
+                company: "日本鉴真国际 | 头部游戏IP",
+                role: "海外内容负责人 / 编导",
+                tags: ["Z世代文化", "二次元", "游戏出海"],
+                description: "深入二次元腹地，与头部游戏厂商合作，主导海外市场品牌与内容营销项目，开发海外KOL,担任“内容+策略+落地”三位一体角色，负责项目从创意到落地的全流程。通过内容而非广告，直击Z世代痛点，将游戏角色转化成具有情感链接的重要品牌资产。",
+                
+                type: "video-showcase",
+                videos: [
+                    { 
+                        title: "原神·仆人 MV《X》", 
+                        views: "700万+", 
+                        label: "YouTube播放量",
+                        customThumb: "https://img.youtube.com/vi/xQqdjDi40bE/maxresdefault.jpg", 
+                        link: "https://www.youtube.com/watch?v=xQqdjDi40bE",
+                        isVertical: false
+                    },
+                    { 
+                        title: "原神·散兵 MV", 
+                        views: "YT&B站 共300万+", 
+                        label: "全网播放",
+                        link: "https://www.bilibili.com/video/BV1es4y1d7Gu/" 
+                    },
+                    { 
+                        title: "绝区零万圣节短片", 
+                        views: "YT 100万+", 
+                        label: "YouTube播放",
+                        link: "https://www.youtube.com/watch?v=U7NAozMu5Lk" 
+                    }
+                ],
+                keyBattles: [
+                    "品牌资产：通过品牌思维驱动内容策略，找到人类共通的情感母题，形成跨文化共鸣，实现多支作品破百万最高700万+播放，加强玩家与角色情感链接，积累品牌资产。",
+                    "项目统筹：统筹跨国项目全流程（策划/编导/团队管理/甲方对接），建立方法论，提高整体效率。",
+                    "危机公关：敏锐识别涉及国家文化的高危舆论风险并修正，避免了毁灭性的品牌危机。",
+                    "共建担当：在团队危机时刻主动补位，通过长线布局挽回大客户信任，确保业务延续。" 
+                ]
+            },
+
+            // 2. 品牌顾问
+            {
+                id: "consultant",
+                period: "2020.09 - 2022.04",
+                company: "多个中高端品牌",
+                role: "独立品牌顾问",
+                tags: ["跨境电商", "餐饮", "从0到1"],
+                description: "为多家企业提供品牌战略与基础框架搭建。覆盖跨境电商、餐饮等行业，建立从底层洞察到落地执行的品牌基础。",
+                
+                type: "gallery", 
+                mediaSrc: [
+                    "./images/consultant_1.jpg", 
+                    "./images/consultant_2.jpg"
+                ],
+                keyBattles: [
+                    "品牌框架：负责跨境电商品牌基础体系搭建（定位/VI/UI）。",
+                    "品牌升级：参与成熟品牌升级全案，优化用户体验设计。",
+                    "从0到1: 参与高端新品牌建立，为后续增长打下基础。"
+                ]
+            },
+
+            // 3. 葡萄酒贸易
+            {
+                id: "wine",
+                period: "2014 - 2019",
+                company: "全球多家国际葡萄酒贸易机构",
+                role: "B2B PR / 合作伙伴",
+                tags: ["资源整合", "生活方式", "活动策划"],
+                description: "作为新西兰贸发局、法国香槟协会、德国葡萄酒协会等机构的本地化合作伙伴，策划并落地多场商业品鉴会与媒体活动，构建从贸易端到消费端的文化桥梁。",
+                
+                type: "gallery", 
+                mediaSrc: [
+                    "./images/wine_1.jpg", 
+                    "./images/wine_2.jpg"
+                ],
+                keyBattles: [
+                    "精准邀约：统筹本地KOL、媒体与圈内人士，确保活动的人群精准度。",
+                    "全案落地：主导场地格调把控、流程策划到现场执行，确保国际标准呈现。",
+                    "体验转译：尝试将晦涩的味觉体验转化为可视化的视觉语言，协助葡萄酒文化的传播。"
+                ]
+            },
+
+            // 4. 牛排餐饮
+            {
+                id: "steakhouse",
+                period: "2018.05 - 2020.08",
+                company: "赤火牛排餐饮管理有限公司",
+                role: "品牌总监",
+                tags: ["品牌系统", "空间体验", "东方美学"],
+                description: "在本地龙头企业，负责老品牌的彻底重构与升级。抛弃“西式模仿”，确立“东方家庭”的独特哲学。通过搭建品牌系统，实现品牌从内在灵魂到外在形象、行为的统一，构建全品牌全链路管理。并从0到1参与两个新品牌的建设。",
+                
+                type: "gallery", 
+                mediaSrc: [
+                    "./images/steak_1.jpg", 
+                    "./images/steak_2.jpg"
+                ],
+                keyBattles: [
+                    "差异化定位：建立东方家庭定位，创新“茶配牛排、刀叉配筷”的独特体验，在红海中切出独特生态位。",
+                    "审美赋能：帮品牌彻底改头换面，进入中高端商场体系，显著提升用户好感度与品牌生命周期。",
+                    "体验闭环：搭建整套品牌全链路管理系统，确保品牌灵魂从内到外的一致性，实现此系统工程。",
+                    "新品牌孵化：参与孵化高端新品牌木棉·晓粤，和商场店新品牌木棉·小粤，从0到1建立框架并发展为跨省连锁品牌。"
+                ]
+            },
+
+            // 5. 早期经历
+            {
+                id: "media",
+                period: "2013.08 - 2017.12",
+                company: "文化传媒 & 知名媒体",
+                role: "主编 / 品牌总监",
+                tags: ["内容策划", "结构化思考", "叙事表达"],
+                description: "从媒体主编到品牌总监的转型期。曾在杂志社担任主编，在凤凰网、中国网担任编辑，培养了扎实的内容策划与用户洞察能力。",
+                type: "none", 
+                // 修改：恢复两个亮点
+                keyBattles: [
+                    "品牌基础：负责品牌基础建设与定位探索，为后续系统能力奠定基础。",
+                    "内容基础：培养了叙事表达、结构化思考与用户洞察能力。"
+                ]
+            }
+        ];
+
+        function renderWorks() {
+            const container = document.getElementById('works-container');
+            let html = '';
+
+            experiences.forEach((job, index) => {
+                let mediaHtml = '';
+
+                if (job.type === 'video-showcase') {
+                    const mainVideo = job.videos[0];
+                    const getThumb = mainVideo.customThumb;
+                    
+                    const sideList = job.videos.slice(1).map((v) => `
+                        <a href="${v.link}" target="_blank" class="glass-card p-3 cursor-pointer hover:bg-white/10 transition-colors flex flex-col justify-center group/item">
+                            <div class="flex justify-between items-start">
+                                <span class="text-emerald-400 font-mono text-xs mb-1">▶ Watch</span>
+                                <span class="opacity-0 group-hover/item:opacity-100 text-emerald-400 text-xs transition-opacity">↗</span>
+                            </div>
+                            <h4 class="text-xs font-bold leading-tight mb-1 text-white">${v.title}</h4>
+                            <span class="text-[10px] opacity-50">${v.views}</span>
+                        </a>
+                    `).join('');
+
+                    mediaHtml = `
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
+                            <div class="lg:col-span-8">
+                                <h4 class="text-lg font-serif-main mb-3 text-white flex items-center gap-2">
+                                    <span class="text-emerald-400">▶</span> <span>${mainVideo.title}</span>
+                                </h4>
+                                <a href="${mainVideo.link}" target="_blank" class="block group cursor-pointer relative">
+                                    <div class="media-container shadow-2xl aspect-video-fix" style="--bg-image: url('${getThumb}')">
+                                        <img src="${getThumb}" alt="Video Thumbnail" onerror="this.src='https://via.placeholder.com/1280x720/111/333?text=Video+Thumbnail'">
+                                        <div class="play-btn">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="lg:col-span-4 flex flex-col gap-4 mt-10">
+                                <div class="glass-card p-5 flex flex-col justify-center h-full min-h-[100px]">
+                                    <span class="stat-number text-5xl font-serif-main font-bold mb-1">${mainVideo.views}</span>
+                                    <span class="text-xs uppercase tracking-widest opacity-50">${mainVideo.label}</span>
+                                </div>
+                                <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                                    ${sideList}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (job.type === 'gallery') {
+                    mediaHtml = `
+                        <div class="relative w-full aspect-video-fix rounded-lg overflow-hidden border border-white/10 shadow-2xl mb-8 group gallery-container" 
+                             id="gallery-${job.id}"
+                             onmouseenter="pauseGallery('${job.id}')" 
+                             onmouseleave="resumeGallery('${job.id}')">
+                            <img src="${job.mediaSrc[0]}" id="img-${job.id}" data-index="0" class="w-full h-full object-cover transition-opacity duration-700 opacity-90" onerror="this.src='https://via.placeholder.com/1280x720/111/333?text=Project+Image'">
+                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                                ${job.mediaSrc.map((_, i) => `<div class="gallery-dot ${i===0?'active':''}" onclick="setGallery('${job.id}', ${i})" id="dot-${job.id}-${i}"></div>`).join('')}
+                            </div>
+                        </div>`;
+                    setTimeout(() => startAutoGallery(job.id, job.mediaSrc), 1000);
+                } else if (job.type === 'none') { mediaHtml = ''; }
+
+                let battlesHtml = '';
+                if (job.keyBattles) {
+                    battlesHtml = `<div class="bg-white/5 p-6 rounded-lg border border-white/5"><h4 class="text-xs uppercase tracking-widest opacity-40 mb-4">Strategic Impact</h4><ul class="space-y-2">${job.keyBattles.map(b => `<li class="flex items-start gap-3 text-sm opacity-80"><span class="text-emerald-500 mt-1">●</span><span>${b}</span></li>`).join('')}</ul></div>`;
+                }
+
+                html += `
+                    <article class="relative pl-8 md:pl-0 fade-in-up" style="animation-delay: ${index * 0.1}s">
+                        <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-white/10 md:hidden"></div>
+                        <div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-emerald-500 md:hidden"></div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                            <div class="md:col-span-3 md:text-right pt-1 md:sticky md:top-24 z-10">
+                                <span class="font-mono text-xs text-emerald-300 block mb-1 opacity-80">${job.period}</span>
+                                <h3 class="text-lg font-serif-main leading-tight mb-2">${job.company}</h3>
+                                <p class="text-xs uppercase tracking-wider opacity-50 mb-4">${job.role}</p>
+                                <div class="flex flex-wrap md:justify-end gap-2 mb-4">
+                                    ${job.tags.map(t => `<span class="text-[10px] uppercase tracking-wider border border-white/20 px-2 py-1 rounded-full text-gray-400 cursor-default hover:border-emerald-400 transition-colors">${t}</span>`).join('')}
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-9">
+                                ${mediaHtml}
+                                <div class="mb-8 pl-4 md:pl-0 border-l-2 border-white/10 md:border-none">
+                                    <p class="text-base leading-relaxed opacity-90 font-light group-hover:u-line inline transition-all duration-300">
+                                        ${job.description}
+                                    </p>
+                                </div>
+                                ${battlesHtml}
+                            </div>
+                        </div>
+                    </article>
+                    <div class="w-full h-[1px] bg-white/5 my-16 md:hidden"></div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        const galleryTimers = {};
+        function startAutoGallery(id, images) {
+            if (galleryTimers[id]) clearInterval(galleryTimers[id]);
+            galleryTimers[id] = setInterval(() => {
+                const img = document.getElementById(`img-${id}`);
+                if(img) {
+                    let curr = parseInt(img.getAttribute('data-index'));
+                    let next = (curr + 1) % images.length;
+                    updateGalleryUI(id, next, images);
+                }
+            }, 3000);
+        }
+        function updateGalleryUI(id, index, images) {
+            const img = document.getElementById(`img-${id}`);
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = images[index];
+                img.setAttribute('data-index', index);
+                img.style.opacity = 0.9;
+                document.querySelectorAll(`#gallery-${id} .gallery-dot`).forEach((d, i) => {
+                    d.classList.toggle('active', i === index);
+                });
+            }, 300);
+        }
+        function setGallery(id, index) {
+            const job = experiences.find(j => j.id === id);
+            updateGalleryUI(id, index, job.mediaSrc);
+            startAutoGallery(id, job.mediaSrc);
+        }
+        function pauseGallery(id) { clearInterval(galleryTimers[id]); }
+        function resumeGallery(id) { const job = experiences.find(j => j.id === id); startAutoGallery(id, job.mediaSrc); }
+
+        const canvas = document.getElementById('aurora-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, orbs = [];
+        const colors = ['#1d4ed8', '#3b82f6', '#10b981', '#facc15', '#fbbf24'];
+
+        function resize() {
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
+            orbs = Array.from({ length: 6 }, () => ({
+                x: Math.random() * width, y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+                r: Math.min(width, height) * 0.5,
+                color: colors[Math.floor(Math.random() * colors.length)]
+            }));
+        }
+        function animate() {
+            ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
+            orbs.forEach(orb => {
+                orb.x += orb.vx; orb.y += orb.vy;
+                if(orb.x < -orb.r/2 || orb.x > width+orb.r/2) orb.vx *= -1;
+                if(orb.y < -orb.r/2 || orb.y > height+orb.r/2) orb.vy *= -1;
+                const g = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
+                g.addColorStop(0, orb.color); g.addColorStop(1, 'transparent');
+                ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = g;
+                ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI*2); ctx.fill();
+            });
+            ctx.globalCompositeOperation = 'source-over';
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', resize);
+        
+        resize();
+        animate();
+        renderWorks();
+    </script>
+</body>
+</html>
