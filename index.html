@@ -38,6 +38,10 @@
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
+        
+        /* 隐藏特定区域的滚动条 */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .font-serif-main { font-family: var(--font-head); }
         
@@ -193,24 +197,36 @@
 
     <main class="max-w-5xl mx-auto px-6 pb-32">
 
-        <header class="min-h-screen flex flex-col justify-center items-start pt-20 relative">
-            <div class="fade-in-up w-full">
-                <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-8 text-emerald-300">
-                    Manifesto
-                </p>
-                
-                <h1 class="font-serif-main text-5xl md:text-8xl leading-none mb-6 tracking-tight">
-                    万物皆有灵，<br>
-                    品牌亦有心。
-                </h1>
+        <header class="min-h-screen flex flex-col justify-center pt-20 relative">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
+                <!-- 左侧文案 -->
+                <div class="fade-in-up">
+                    <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-8 text-emerald-300">
+                        Manifesto
+                    </p>
+                    
+                    <h1 class="font-serif-main text-5xl md:text-8xl leading-none mb-6 tracking-tight">
+                        万物皆有灵，<br>
+                        品牌亦有心。
+                    </h1>
 
-                <h2 class="text-lg md:text-2xl font-light text-white/70 font-serif-main italic mb-12 tracking-wide">
-                    Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
-                </h2>
+                    <h2 class="text-lg md:text-2xl font-light text-white/70 font-serif-main italic mb-12 tracking-wide">
+                        Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
+                    </h2>
+                    
+                    <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                        赵一亭Enki｜品牌内容总监
+                    </p>
+                </div>
                 
-                <p class="text-sm md:text-base opacity-80 leading-relaxed">
-                    赵一亭Enki｜品牌内容总监
-                </p>
+                <!-- 右侧照片 -->
+                <div class="fade-in-up hidden md:flex justify-end relative">
+                    <div class="aspect-[3/4] w-full max-w-[320px] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
+                        <img src="./images/avatar.jpg" 
+                             alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
+                             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'">
+                    </div>
+                </div>
             </div>
             
             <div class="absolute bottom-12 left-6 opacity-30 animate-bounce">
@@ -220,13 +236,29 @@
 
         <section class="py-24 border-t border-white/5">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-4 fade-in-up">
-                    <div class="aspect-[3/4] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
-                        <img src="./images/avatar.jpg" 
-                             alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
-                             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'">
+                <!-- 修改：原照片位置变成基本信息框 -->
+                <div class="md:col-span-4 fade-in-up h-full">
+                    <div class="glass-card p-8 h-full flex flex-col justify-center rounded-2xl relative overflow-hidden group">
+                        <!-- 装饰光晕 -->
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all duration-500"></div>
+                        
+                        <h3 class="font-serif-main text-2xl text-emerald-300 mb-6 flex items-center gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            基本信息
+                        </h3>
+                        
+                        <div class="space-y-4 text-sm font-light">
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">姓名</span> <span class="opacity-90 text-right">赵一亭 (Enki)</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">性别</span> <span class="opacity-90 text-right">女</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">学历</span> <span class="opacity-90 text-right">本科</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">专业</span> <span class="opacity-90 text-right">食品科学与工程</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">毕业院校</span> <span class="opacity-90 text-right">青岛大学</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">出生日期</span> <span class="opacity-90 text-right">1989.02</span></div>
+                            <div class="flex justify-between border-b border-white/5 pb-2"><span class="opacity-50">Base</span> <span class="opacity-90 text-right">北上杭深</span></div>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="md:col-span-8 fade-in-up" style="animation-delay: 0.1s">
                     <h2 class="font-serif-main text-3xl md:text-4xl mb-8">我是 赵一亭Enki。<br><span class="text-emerald-300/80 text-2xl italic">品牌灵魂构建师。</span></h2>
                     
@@ -242,7 +274,7 @@
                             我的专长，在于洞察用户微妙情绪，搭建品牌系统，提炼独特定位，
                             通过<span class="text-emerald-300 font-normal">打动人心的内容</span>与<span class="text-emerald-300 font-normal">情感链接</span>，让品牌从“功能商品”进化为用户的“精神栖息地”。
                         </p>
-                   
+                    </div>
                 </div>
             </div>
         </section>
@@ -307,6 +339,87 @@
                 <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default">
                     <span class="text-emerald-500">#</span> 天生好奇 (心理学/系统思维/艺术/哲学/历史/AI)
                 </span>
+            </div>
+        </section>
+
+        <!-- 新增：工作经历一览 -->
+        <section class="py-24 border-t border-white/5 overflow-hidden">
+            <div class="mb-12 fade-in-up">
+                <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Timeline</span>
+                <h2 class="font-serif-main text-3xl md:text-4xl">工作经历一览</h2>
+            </div>
+
+            <div class="relative w-full overflow-x-auto pb-8 fade-in-up hide-scrollbar" style="animation-delay: 0.2s">
+                <div class="flex min-w-[900px] relative pt-6">
+                    <!-- 水平轴线 -->
+                    <div class="absolute top-[96px] left-8 right-8 h-[1px] bg-gradient-to-r from-emerald-500/0 via-emerald-500/50 to-emerald-500/0 z-0"></div>
+
+                    <!-- 经历1 -->
+                    <div class="flex-1 flex flex-col items-center px-2 relative z-10 group cursor-default">
+                        <div class="h-20 flex flex-col items-center justify-end pb-5 transition-transform group-hover:-translate-y-2">
+                            <span class="font-mono text-[11px] text-emerald-300/70 tracking-widest mb-1.5">2013.08-2017.12</span>
+                            <span class="font-serif-main text-lg whitespace-nowrap text-white/90">奥德赛时期</span>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
+                        <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
+                            <div class="text-sm font-medium whitespace-nowrap mb-1">知名媒体→文化传媒</div>
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap">编辑/主编→品牌总监</div>
+                        </div>
+                    </div>
+
+                    <!-- 经历2 -->
+                    <div class="flex-1 flex flex-col items-center px-2 relative z-10 group cursor-default">
+                        <div class="h-20 flex flex-col items-center justify-end pb-5 transition-transform group-hover:-translate-y-2">
+                            <span class="font-mono text-[11px] text-emerald-300/70 tracking-widest mb-1.5">2018.05-2020.08</span>
+                            <span class="font-serif-main text-lg whitespace-nowrap text-white/90">品牌内容体系化</span>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
+                        <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
+                            <div class="text-sm font-medium whitespace-nowrap mb-1">本地中高端餐饮</div>
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap">品牌总监</div>
+                        </div>
+                    </div>
+
+                    <!-- 经历3 -->
+                    <div class="flex-1 flex flex-col items-center px-2 relative z-10 group cursor-default">
+                        <div class="h-20 flex flex-col items-center justify-end pb-5 transition-transform group-hover:-translate-y-2">
+                            <span class="font-mono text-[11px] text-emerald-300/70 tracking-widest mb-1.5">2020.09-2022.04</span>
+                            <span class="font-serif-main text-lg whitespace-nowrap text-white/90">品牌顾问时期</span>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
+                        <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
+                            <div class="text-sm font-medium whitespace-nowrap mb-1">中高端餐酒茶</div>
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap">品牌顾问</div>
+                        </div>
+                    </div>
+
+                    <!-- 经历4 -->
+                    <div class="flex-1 flex flex-col items-center px-2 relative z-10 group cursor-default">
+                        <div class="h-20 flex flex-col items-center justify-end pb-5 transition-transform group-hover:-translate-y-2">
+                            <span class="font-mono text-[11px] text-emerald-300/70 tracking-widest mb-1.5">2022.05-2025.05</span>
+                            <span class="font-serif-main text-lg whitespace-nowrap text-white/90">爆款内容</span>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
+                        <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
+                            <div class="text-sm font-medium whitespace-nowrap mb-1">日本鉴真国际</div>
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap">内容营销总监</div>
+                        </div>
+                    </div>
+
+                    <!-- 经历5 -->
+                    <div class="flex-1 flex flex-col items-center px-2 relative z-10 group cursor-default">
+                        <div class="h-20 flex flex-col items-center justify-end pb-5 transition-transform group-hover:-translate-y-2">
+                            <span class="font-mono text-[11px] text-emerald-300/70 tracking-widest mb-1.5">2025.05-至今</span>
+                            <span class="font-serif-main text-lg whitespace-nowrap text-white/90">再次成长</span>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
+                        <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
+                            <div class="text-sm font-medium whitespace-nowrap mb-1">学习AI和心理学</div>
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap opacity-0 select-none">-</div> <!-- 占位符保持高度对齐 -->
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
