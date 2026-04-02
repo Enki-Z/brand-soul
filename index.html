@@ -199,36 +199,36 @@
 
         <header class="min-h-screen flex flex-col justify-center pt-20 relative">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
-    <!-- 左侧文案（占据 7 栏/大屏 8 栏） -->
-    <div class="fade-in-up md:col-span-7 lg:col-span-8 z-10">
-        <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-6 text-emerald-300">
-            Manifesto
-        </p>
-        
-        <h1 class="font-serif-main text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 tracking-tight lg:whitespace-nowrap">
-            万物皆有灵，<br class="hidden md:block">
-            品牌亦有心。
-        </h1>
+                <!-- 左侧文案 -->
+                <div class="fade-in-up md:col-span-7 lg:col-span-8 z-10">
+                    <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-6 text-emerald-300">
+                        Manifesto
+                    </p>
+                    
+                    <!-- 修改1：移除了紧凑字距 tracking-tight，加入了更舒展的 tracking-wider -->
+                    <h1 class="font-serif-main text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 tracking-wider lg:whitespace-nowrap">
+                        万物皆有灵，<br class="hidden md:block">
+                        品牌亦有心。
+                    </h1>
 
-        <h2 class="text-lg md:text-xl lg:text-2xl font-light text-white/70 font-serif-main italic mb-10 tracking-wide max-w-xl">
-            Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
-        </h2>
-        
-        <p class="text-base md:text-lg opacity-90 leading-relaxed font-medium mt-4">
-            赵一亭Enki <span class="mx-2 opacity-40 font-light">|</span> <span class="opacity-80">品牌内容总监</span>
-        </p>
-    </div>
-    
-    <!-- 右侧照片（占据 5 栏/大屏 4 栏） -->
-    <div class="fade-in-up hidden md:flex justify-end relative md:col-span-5 lg:col-span-4">
-        <div class="aspect-[3/4] w-full max-w-[320px] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
-            <img src="./images/avatar.jpg" 
-                 alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
-                 onerror="this.src='[https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop)'">
-        </div>
-    </div>
-</div>
-
+                    <h2 class="text-lg md:text-xl lg:text-2xl font-light text-white/70 font-serif-main italic mb-10 tracking-wide max-w-xl">
+                        Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
+                    </h2>
+                    
+                    <p class="text-base md:text-lg opacity-90 leading-relaxed font-medium mt-4">
+                        赵一亭Enki <span class="mx-2 opacity-40 font-light">|</span> <span class="opacity-80">品牌内容总监</span>
+                    </p>
+                </div>
+                
+                <!-- 右侧照片 -->
+                <div class="fade-in-up hidden md:flex justify-end relative md:col-span-5 lg:col-span-4">
+                    <div class="aspect-[3/4] w-full max-w-[320px] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
+                        <img src="./images/avatar.jpg" 
+                             alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
+                             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'">
+                    </div>
+                </div>
+            </div>
             
             <div class="absolute bottom-12 left-6 opacity-30 animate-bounce">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke-width="1"/></svg>
@@ -237,7 +237,7 @@
 
         <section class="py-24 border-t border-white/5">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-                <!-- 修改：原照片位置变成基本信息框 -->
+                <!-- 基本信息框 -->
                 <div class="md:col-span-4 fade-in-up h-full">
                     <div class="glass-card p-8 h-full flex flex-col justify-center rounded-2xl relative overflow-hidden group">
                         <!-- 装饰光晕 -->
@@ -260,7 +260,8 @@
                     </div>
                 </div>
                 
-                <div class="md:col-span-8 fade-in-up" style="animation-delay: 0.1s">
+                <!-- 修改2：通过加入 md:pl-12 lg:pl-16，为右侧文本容器增加了左侧留白（负空间），修正视觉失衡 -->
+                <div class="md:col-span-8 fade-in-up md:pl-12 lg:pl-16" style="animation-delay: 0.1s">
                     <h2 class="font-serif-main text-3xl md:text-4xl mb-8">我是 赵一亭Enki。<br><span class="text-emerald-300/80 text-2xl italic">品牌灵魂构建师。</span></h2>
                     
                     <div class="space-y-6 text-lg font-light opacity-90 leading-relaxed">
@@ -343,7 +344,7 @@
             </div>
         </section>
 
-        <!-- 新增：工作经历一览 -->
+        <!-- 工作经历一览 -->
         <section class="py-24 border-t border-white/5 overflow-hidden">
             <div class="mb-12 fade-in-up">
                 <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Timeline</span>
@@ -416,7 +417,8 @@
                         <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
                         <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
                             <div class="text-sm font-medium whitespace-nowrap mb-1">学习AI和心理学</div>
-                            <div class="text-xs text-emerald-400/80 whitespace-nowrap opacity-0 select-none">-</div> <!-- 占位符保持高度对齐 -->
+                            <!-- 修改3：移除了占位符的透明属性，替换为真实的里程碑文案 -->
+                            <div class="text-xs text-emerald-400/80 whitespace-nowrap">已有小成果</div>
                         </div>
                     </div>
 
@@ -477,22 +479,17 @@
         const equalizer = document.getElementById('equalizer');
         const audioText = document.getElementById('audio-text');
 
-        // 修改：尝试自动播放
         window.addEventListener('load', () => {
-             // 现代浏览器通常需要用户交互才能播放音频，但我们会尝试
              const playPromise = audio.play();
              if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    // Autoplay started!
                     equalizer.classList.add('playing');
                     audioText.innerText = "Sound On";
                     isPlaying = true;
                 }).catch(error => {
-                    // Autoplay was prevented.
                     console.log("Autoplay prevented by browser, waiting for interaction.");
                     audioText.innerText = "Sound Off";
                     isPlaying = false;
-                    // Fallback: 页面第一次点击时播放
                     document.body.addEventListener('click', startAudioOnce);
                 });
              }
@@ -553,7 +550,6 @@
                         link: "https://www.youtube.com/watch?v=U7NAozMu5Lk" 
                     }
                 ],
-                // 重点添加：图片放这里
                 mediaSrc: [
                     "./images/japan_1.jpg", 
                     "./images/japan_2.jpg",
@@ -644,7 +640,6 @@
                 tags: ["内容策划", "结构化思考", "叙事表达"],
                 description: "从媒体主编到品牌总监的转型期。曾在杂志社担任主编，在凤凰网、中国网担任编辑，培养了扎实的内容策划与用户洞察能力。",
                 type: "none", 
-                // 修改：恢复两个亮点
                 keyBattles: [
                     "品牌基础：负责品牌基础建设与定位探索，为后续系统能力奠定基础。",
                     "内容基础：培养了叙事表达、结构化思考与用户洞察能力。"
@@ -701,7 +696,6 @@
                         </div>
                     `;
 
-                    // 处理视频下方的图片轮播
                     if (job.mediaSrc && job.mediaSrc.length > 0) {
                         mediaHtml += `
                             <div class="relative w-full aspect-video-fix rounded-lg overflow-hidden border border-white/10 shadow-2xl mb-8 group gallery-container" 
