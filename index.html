@@ -176,12 +176,19 @@
     <canvas id="aurora-canvas"></canvas>
 
     <nav class="fixed top-0 w-full p-6 flex justify-between items-center z-50 mix-blend-difference text-white">
-        <div class="text-xs tracking-[0.2em] uppercase font-bold text-emerald-300">Yiting. Brand Soul</div>
+        <div class="text-xs tracking-[0.2em] uppercase font-bold text-emerald-300">Yiting / Portfolio</div>
         
-        <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('enki-zero'); alert('微信号已复制到剪贴板')" class="text-xs tracking-[0.1em] hover:text-emerald-300 transition-colors flex items-center gap-2 cursor-pointer group">
-            <span class="opacity-70 group-hover:opacity-100">WeChat:</span>
-            <span class="font-bold border-b border-white/20 group-hover:border-emerald-300 pb-0.5">enki-zero</span>
-        </a>
+        <div class="relative group cursor-pointer">
+            <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('enki-zero'); alert('微信号已复制到剪贴板')" class="text-xs tracking-[0.1em] hover:text-emerald-300 transition-colors flex items-center gap-2">
+                <span class="opacity-70 group-hover:opacity-100">WeChat:</span>
+                <span class="font-bold border-b border-white/20 group-hover:border-emerald-300 pb-0.5">enki-zero</span>
+            </a>
+            
+            <div class="absolute top-full right-0 mt-4 w-32 h-32 bg-white/10 backdrop-blur-md rounded-lg p-2 border border-white/20 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 z-[60] shadow-2xl">
+                <img src="./images/wechat_qr.jpg" alt="WeChat QR" class="w-full h-full object-cover rounded-sm" onerror="this.src='https://via.placeholder.com/200/111/fff?text=QR'">
+                <div class="text-[8px] text-center mt-1 opacity-50 uppercase tracking-tighter">Scan to connect</div>
+            </div>
+        </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-6 pb-32">
