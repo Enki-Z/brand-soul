@@ -198,26 +198,37 @@
     <main class="max-w-5xl mx-auto px-6 pb-32">
 
         <header class="min-h-screen flex flex-col justify-center pt-20 relative">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
-                <!-- 左侧文案 -->
-                <div class="fade-in-up">
-                    <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-8 text-emerald-300">
-                        Manifesto
-                    </p>
-                    
-                    <h1 class="font-serif-main text-5xl md:text-8xl leading-none mb-6 tracking-tight">
-                        万物皆有灵，<br>
-                        品牌亦有心。
-                    </h1>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
+    <!-- 左侧文案（占据 7 栏/大屏 8 栏） -->
+    <div class="fade-in-up md:col-span-7 lg:col-span-8 z-10">
+        <p class="text-xs md:text-sm tracking-[0.3em] uppercase opacity-50 mb-6 text-emerald-300">
+            Manifesto
+        </p>
+        
+        <h1 class="font-serif-main text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 tracking-tight lg:whitespace-nowrap">
+            万物皆有灵，<br class="hidden md:block">
+            品牌亦有心。
+        </h1>
 
-                    <h2 class="text-lg md:text-2xl font-light text-white/70 font-serif-main italic mb-12 tracking-wide">
-                        Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
-                    </h2>
-                    
-                    <p class="text-sm md:text-base opacity-80 leading-relaxed">
-                        赵一亭Enki｜品牌内容总监
-                    </p>
-                </div>
+        <h2 class="text-lg md:text-xl lg:text-2xl font-light text-white/70 font-serif-main italic mb-10 tracking-wide max-w-xl">
+            Injecting <span class="text-emerald-300">Soul</span> into Brands in the Digital Age.
+        </h2>
+        
+        <p class="text-base md:text-lg opacity-90 leading-relaxed font-medium mt-4">
+            赵一亭Enki <span class="mx-2 opacity-40 font-light">|</span> <span class="opacity-80">品牌内容总监</span>
+        </p>
+    </div>
+    
+    <!-- 右侧照片（占据 5 栏/大屏 4 栏） -->
+    <div class="fade-in-up hidden md:flex justify-end relative md:col-span-5 lg:col-span-4">
+        <div class="aspect-[3/4] w-full max-w-[320px] rounded-sm overflow-hidden relative group portrait-frame bg-[#111]">
+            <img src="./images/avatar.jpg" 
+                 alt="Xinran" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" 
+                 onerror="this.src='[https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop)'">
+        </div>
+    </div>
+</div>
+
                 
                 <!-- 右侧照片 -->
                 <div class="fade-in-up hidden md:flex justify-end relative">
