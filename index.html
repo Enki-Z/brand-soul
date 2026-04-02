@@ -205,7 +205,6 @@
                         Manifesto
                     </p>
                     
-                    <!-- 修改1：移除了紧凑字距 tracking-tight，加入了更舒展的 tracking-wider -->
                     <h1 class="font-serif-main text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 tracking-wider lg:whitespace-nowrap">
                         万物皆有灵，<br class="hidden md:block">
                         品牌亦有心。
@@ -260,7 +259,6 @@
                     </div>
                 </div>
                 
-                <!-- 修改2：通过加入 md:pl-12 lg:pl-16，为右侧文本容器增加了左侧留白（负空间），修正视觉失衡 -->
                 <div class="md:col-span-8 fade-in-up md:pl-12 lg:pl-16" style="animation-delay: 0.1s">
                     <h2 class="font-serif-main text-3xl md:text-4xl mb-8">我是 赵一亭Enki。<br><span class="text-emerald-300/80 text-2xl italic">品牌灵魂构建师。</span></h2>
                     
@@ -417,7 +415,6 @@
                         <div class="w-3 h-3 rounded-full bg-[#050505] border-2 border-emerald-400/50 mb-7 group-hover:scale-150 group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.5)] transition-all duration-300"></div>
                         <div class="glass-card rounded-2xl p-4 text-center w-full transition-all duration-300 group-hover:bg-emerald-900/20 group-hover:border-emerald-500/30 group-hover:translate-y-1">
                             <div class="text-sm font-medium whitespace-nowrap mb-1">学习AI和心理学</div>
-                            <!-- 修改3：移除了占位符的透明属性，替换为真实的里程碑文案 -->
                             <div class="text-xs text-emerald-400/80 whitespace-nowrap">已有小成果</div>
                         </div>
                     </div>
@@ -565,7 +562,28 @@
                 ]
             },
 
-            // 2. 品牌顾问
+            // 【新增】2. AI 实验 （紧跟在日本鉴真之后）
+            {
+                id: "ai-lab",
+                period: "2025.05 - Present",
+                company: "AI 实验",
+                role: "内容创作者 / 独立开发者",
+                tags: ["爆款内容", "官媒转载", "应用开发"],
+                description: "以个人身份进行AI探索，短视频获得众多官媒转载；vibe coding了自用APP和这个网站；思考了前路，认为AI陪伴是我值得进入的领域。",
+                type: "split-showcase-v2", 
+                stats: { number: "100K+", label: "TOTAL LIKES", sub: "Millions of Views" },
+                content: {
+                    video: { title: "现象级AI短视频", thumb: "./images/viral_video_cover.jpg", link: "http://xhslink.com/o/6Ksgobxx9fz" },
+                    app: { title: "防久坐闹钟 App", thumb: "./images/app_screenshot.jpg", link: null }
+                },
+                keyBattles: [
+                    "内容为王：创作的AI短视频获得新华社快看、凤凰网国际、中国日报等官媒转载，获近10万点赞，数百万播放和大量好评，验证了直抵人心的内容具有天然传播力。（10月初随手制作，当时的sora2像素很低）",
+                    "动手实践：零代码开发了一款健康类App，还有个人网站，跑通了“需求-代码-部署”的个人开发全流程。",
+                    "认知与思考：这期间增强了我AI将对全社会带来变革的认知，以及我个人渴望投入其中的想法。"
+                ]
+            },
+
+            // 3. 品牌顾问
             {
                 id: "consultant",
                 period: "2020.09 - 2022.04",
@@ -588,7 +606,7 @@
                 ]
             },
 
-            // 3. 葡萄酒贸易
+            // 4. 葡萄酒贸易
             {
                 id: "wine",
                 period: "2014 - 2019",
@@ -608,7 +626,7 @@
                 ]
             },
 
-            // 4. 牛排餐饮
+            // 5. 牛排餐饮
             {
                 id: "steakhouse",
                 period: "2018.05 - 2020.08",
@@ -631,7 +649,7 @@
                 ]
             },
 
-            // 5. 早期经历
+            // 6. 早期经历
             {
                 id: "media",
                 period: "2013.08 - 2017.12",
@@ -722,6 +740,66 @@
                             </div>
                         </div>`;
                     setTimeout(() => startAutoGallery(job.id, job.mediaSrc), 1000);
+                    
+                /* --- 【新增】：加入 split-showcase-v2 渲染逻辑 --- */
+                } else if (job.type === 'split-showcase-v2') {
+                    const c = job.content;
+                    const s = job.stats;
+                    mediaHtml = `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 items-center">
+                            <!-- 左侧：视频区域 -->
+                            <div class="flex flex-col gap-2 h-[400px] md:h-[450px]">
+                                <h4 class="text-[13px] font-serif-main text-emerald-400 flex items-center gap-1.5 mb-1">
+                                    ▶ <span class="text-white opacity-90">${c.video.title}</span>
+                                </h4>
+                                <a href="${c.video.link}" target="_blank" class="block group cursor-pointer relative flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 hover:border-white/30 transition-colors bg-[#111]">
+                                    <img src="${c.video.thumb}" alt="Video Thumbnail" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/400x600/111/333?text=Video'">
+                                    <div class="play-btn">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            <!-- 中间：数据与概念桥梁 -->
+                            <div class="flex flex-col justify-center gap-6 h-full px-2">
+                                <div class="glass-card py-6 px-4 flex items-center relative overflow-hidden border-emerald-500/30 bg-emerald-500/5 group/card">
+                                    <div class="absolute -right-5 -top-5 w-24 h-24 bg-emerald-500/20 rounded-full blur-xl"></div>
+                                    <div class="absolute left-3 text-emerald-400 arrow-left-anim">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                    </div>
+                                    <div class="w-full text-center pl-6">
+                                        <span class="stat-number text-3xl font-serif-main font-bold block mb-1">${s.number}</span>
+                                        <span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">${s.label}</span>
+                                        <span class="text-[11px] italic opacity-60 block font-serif-main">${s.sub}</span>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card py-6 px-4 flex items-center relative overflow-hidden group/card border-white/10">
+                                    <div class="w-full text-center pr-6">
+                                        <span class="text-xl font-serif-main text-emerald-300 italic block mb-1">Vibe Coding</span>
+                                        <span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">AI FIRST APP</span>
+                                        <span class="text-[10px] opacity-50 block">Zero-Code Development</span>
+                                    </div>
+                                    <div class="absolute right-3 text-emerald-400 arrow-right-anim">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 右侧：App截图 -->
+                            <div class="flex flex-col gap-2 h-[400px] md:h-[450px]">
+                                <h4 class="text-[13px] font-serif-main text-emerald-400 flex justify-end items-center gap-1.5 mb-1">
+                                    <span class="text-white opacity-90">${c.app.title}</span> 
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-70"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                                </h4>
+                                <div class="relative flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111]">
+                                    <img src="${c.app.thumb}" alt="App Screenshot" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/400x600/111/333?text=App'">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                /* --- 逻辑插入完毕 --- */
+
                 } else if (job.type === 'none') { mediaHtml = ''; }
 
                 let battlesHtml = '';
