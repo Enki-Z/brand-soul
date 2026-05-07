@@ -213,40 +213,6 @@
                 </div>
             </div>
         </section>
-        <section class="py-24 border-t border-white/5">
-            <div class="mb-12 fade-in-up">
-                <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Capabilities</span>
-                <h2 class="font-serif-main text-3xl md:text-4xl">我的核心能力</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.1s">
-                    <div class="icon-box">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    </div>
-                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">可落地的品牌系统</h3>
-                    <p class="text-xs opacity-60 leading-relaxed flex-grow">曾为10年老品牌搭建可落地的CIS品牌识别系统，实现品牌理念、行为、视觉的闭环。<br><br><span class="opacity-80 border-t border-white/10 pt-4 block mt-2">也多次参与新品牌从0到1搭建。</span></p>
-                </div>
-                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.2s">
-                    <div class="icon-box">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
-                    </div>
-                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">打动人心的内容</h3>
-                    <p class="text-xs opacity-60 leading-relaxed flex-grow">曾与头部游戏IP合作高品质内容，我策划、编导，统筹内容方向与跨国团队协作，多次实现百万级播放。<br><br><span class="opacity-80 border-t border-white/10 pt-4 block mt-2">独立制作人文类AI短视频，获得新华社快看、凤凰网国际各大官媒转载，总播放数百万，点赞近10万。</span></p>
-                </div>
-                <div class="glass-card p-6 fade-in-up group flex flex-col" style="animation-delay: 0.3s">
-                    <div class="icon-box">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    </div>
-                    <h3 class="font-serif-main text-lg mb-3 text-emerald-300">丰富的品牌营销经验</h3>
-                    <p class="text-xs opacity-60 leading-relaxed flex-grow">为众多游戏IP提供过海外KOL营销、创作者生态、IP联名等。<br><br><span class="opacity-80 border-t border-white/10 pt-4 block mt-2">为品牌提升曝光度，增加用户粘性，积累品牌资产。</span></p>
-                </div>
-            </div>
-            <div class="flex flex-wrap gap-4 text-xs font-mono opacity-50 fade-in-up" style="animation-delay: 0.4s">
-                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default"><span class="text-emerald-500">#</span> Owner精神</span>
-                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default"><span class="text-emerald-500">#</span> 学习能力</span>
-                <span class="flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full hover:bg-white/5 transition-colors cursor-default"><span class="text-emerald-500">#</span> 天生好奇 (心理学/系统思维/艺术/哲学/历史/AI)</span>
-            </div>
-        </section>
         <section class="py-24 border-t border-white/5 overflow-hidden">
             <div class="mb-12 fade-in-up">
                 <span class="text-xs tracking-[0.2em] uppercase opacity-40 block mb-2">Timeline</span>
@@ -474,7 +440,44 @@
                     setTimeout(() => startAutoGallery(job.id, job.mediaSrc), 1000);
                 } else if (job.type === 'split-showcase-v2') {
                     const c = job.content, s = job.stats;
-                    mediaHtml = `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 items-center"><div class="flex flex-col gap-2 h-[400px] md:h-[450px]"><h4 class="text-[13px] font-serif-main text-emerald-400 flex items-center gap-1.5 mb-1">▶ <span class="text-white opacity-90">${c.video.title}</span></h4><a href="${c.video.link}" target="_blank" class="block group cursor-pointer relative flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111]"><img src="${c.video.thumb}" class="object-cover w-full h-full"><div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></a></div><div class="flex flex-col justify-center gap-6 h-full px-2"><div class="glass-card py-6 px-4 flex items-center border-emerald-500/30 bg-emerald-500/5"><div class="w-full text-center"><span class="stat-number text-3xl font-serif-main font-bold block mb-1">${s.number}</span><span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">${s.label}</span><span class="text-[11px] italic opacity-60 block font-serif-main">${s.sub}</span></div></div><div class="glass-card py-6 px-4 border-white/10"><div class="w-full text-center"><span class="text-xl font-serif-main text-emerald-300 italic block mb-1">Vibe Coding</span><span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">AI FIRST APP</span></div></div></div><div class="flex flex-col gap-2 h-[400px] md:h-[450px]"><h4 class="text-[13px] font-serif-main text-emerald-400 flex justify-end items-center gap-1.5 mb-1"><span class="text-white opacity-90">${c.app.title}</span></h4><div class="relative flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111]"><img src="${c.app.thumb}" class="object-cover w-full h-full"></div></div></div>`;
+                    mediaHtml = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 items-center">
+                        <div class="flex flex-col gap-2 h-[400px] md:h-[450px]">
+                            <h4 class="text-[13px] font-serif-main text-emerald-400 flex items-center gap-1.5 mb-1">▶ <span class="text-white opacity-90">${c.video.title}</span></h4>
+                            <a href="${c.video.link}" target="_blank" class="block group cursor-pointer relative flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111]">
+                                <img src="${c.video.thumb}" class="object-cover w-full h-full">
+                                <div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+                            </a>
+                        </div>
+                        <div class="flex flex-col justify-center gap-6 h-full px-2">
+                            <div class="glass-card py-6 px-4 flex items-center border-emerald-500/30 bg-emerald-500/5 relative overflow-hidden">
+                                <div class="absolute left-2 top-1/2 -translate-y-1/2 text-emerald-400 opacity-50 arrow-left-anim">←</div>
+                                <div class="w-full text-center">
+                                    <span class="stat-number text-3xl font-serif-main font-bold block mb-1">${s.number}</span>
+                                    <span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">${s.label}</span>
+                                    <span class="text-[11px] italic opacity-60 block font-serif-main">${s.sub}</span>
+                                </div>
+                            </div>
+                            <div class="glass-card py-6 px-4 border-white/10 relative overflow-hidden">
+                                <div class="absolute right-2 top-1/2 -translate-y-1/2 text-emerald-400 opacity-50 arrow-right-anim">→</div>
+                                <div class="w-full text-center">
+                                    <span class="text-xl font-serif-main text-emerald-300 italic block mb-1">20w+播放</span>
+                                    <span class="text-[11px] uppercase tracking-widest opacity-90 block mb-1">4.7w点赞</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2 h-[400px] md:h-[450px]">
+                            <h4 class="text-[13px] font-serif-main text-emerald-400 flex justify-end items-center gap-1.5 mb-1">
+                                <span class="text-white opacity-90">${c.app.title}</span>
+                            </h4>
+                            <a href="${c.app.link}" target="_blank" class="relative block flex-grow rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[#111] group">
+                                <img src="${c.app.thumb}" class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="text-[10px] text-white/70 uppercase tracking-[0.2em] font-mono">View Project ↗</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>`;
                 }
                 let battlesHtml = job.keyBattles ? `<div class="bg-white/5 p-6 rounded-lg border border-white/5"><h4 class="text-xs uppercase tracking-widest opacity-40 mb-4">Strategic Impact</h4><ul class="space-y-2">${job.keyBattles.map(b => `<li class="flex items-start gap-3 text-sm opacity-80"><span class="text-emerald-500 mt-1">●</span><span>${b}</span></li>`).join('')}</ul></div>` : '';
                 html += `<article class="relative pl-8 md:pl-0 fade-in-up" style="animation-delay: ${index * 0.1}s"><div class="absolute left-0 top-0 bottom-0 w-[1px] bg-white/10 md:hidden"></div><div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-emerald-500 md:hidden"></div><div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start"><div class="md:col-span-3 md:text-right pt-1 md:sticky md:top-24 z-10"><span class="font-mono text-xs text-emerald-300 block mb-1 opacity-80">${job.period}</span><h3 class="text-lg font-serif-main leading-tight mb-2">${job.company}</h3><p class="text-xs uppercase tracking-wider opacity-50 mb-4">${job.role}</p><div class="flex flex-wrap md:justify-end gap-2 mb-4">${job.tags.map(t => `<span class="text-[10px] uppercase tracking-wider border border-white/20 px-2 py-1 rounded-full text-gray-400">${t}</span>`).join('')}</div></div><div class="md:col-span-9">${mediaHtml}<div class="mb-8 pl-4 md:pl-0 border-l-2 border-white/10 md:border-none"><p class="text-base leading-relaxed opacity-90 font-light">${job.description}</p></div>${battlesHtml}</div></div></article><div class="w-full h-[1px] bg-white/5 my-16 md:hidden"></div>`;
